@@ -1,0 +1,288 @@
+#mainNav {
+    border-bottom: 1px solid #ecf0f1;
+    background: transparent;
+}
+
+#mainNav .navbar-brand {
+    padding: 10px 20px;
+    color: #343a40;
+}
+
+#mainNav .navbar-brand:focus,
+#mainNav .navbar-brand:hover {
+    color: #0085A1;
+}
+
+#mainNav .navbar-nav>li.nav-item>a {
+    padding: 10px 20px;
+    color: #343a40;
+}
+
+#mainNav .navbar-nav>li.nav-item>a:focus,
+#mainNav .navbar-nav>li.nav-item>a:hover {
+    color: #0085A1;
+
+}
+
+header.masthead {
+    margin-bottom: 50px;
+    background: no-repeat center center;
+    background-color: #fff;
+    background-attachment: scroll;
+    position: relative;
+    background-size: cover;
+}
+
+header.masthead .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    opacity: 0.5;
+}
+
+/**/
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+.detail-body {
+    background: #fff;
+    margin-top: 100px;
+    margin-bottom: 50px;
+
+}
+
+.user-info {
+    font-size: 16px;
+    color: #394043;
+    font-weight: 300;
+    line-height: 25px;
+    text-align: justify;
+    border-bottom: #ecf0f1 1px solid;
+    padding: 10px;
+    margin: 20px 20px 10px 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.c-1 {
+    padding: 1px 10px 2px 20px;
+    margin: 0 0 12px 0;
+    background-color: #ecf0f1;
+}
+
+.c-1 span {
+    line-height: 30px;
+}
+
+/* editor button */
+.c-2 {
+    margin: 0 0 12px 0;
+    border-radius: 1px;
+    font-size: 13px;
+}
+
+input {
+    font-size: 12px;
+    padding-left: 8px;
+    height: 28px;
+    width: 350px;
+}
+
+.course {
+    margin-top: 10px;
+    padding: 7px 5px 0 5px;
+    background: #fff;
+}
+
+.course-info {
+    height: 30px;
+    font-weight: 500;
+    color: #333;
+    font-size: 16px;
+}
+
+.course-info1 {
+    height: 20px;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.course-info span {
+    line-height: 37px;
+}
+
+.price {
+    color: #e74c3c;
+    font-size: 14px;
+}
+
+/* change-chanle */
+.nav-tabs>li {
+    cursor: pointer;
+}
+
+.nav-tabs>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border-radius: 4px 4px 0 0;
+    text-decoration: none;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.nav-tabs>li>a:focus,
+.nav-tabs>li>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #eee;
+    text-decoration: none
+}
+
+.nav-tabs .active {
+    color: #555;
+    background-color: #eee;
+}
+
+/* chanle */
+.collection {
+    display: none;
+    overflow: scroll;
+    height: 650px;
+}
+
+.collection-line {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 20px 20px 20px 5px;
+    background: #fff;
+    border-bottom: #ecf0f1 1px solid;
+}
+
+.collection-line-info {
+    font-size: 14px;
+
+}
+
+.collection-line-info div {
+    height: 31px;
+
+}
+
+.collection-line-info .attribute-text {
+    font-weight: 400;
+    color: #57606f;
+    letter-spacing: 0.2px;
+}
+
+.collection-line-info .info-text {
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.2px;
+}
+
+/* more */
+.info-more {
+    text-align: center;
+}
+
+.info-more a {
+    font-weight: 400;
+    color: #3498db;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.info-more i {
+    padding: 65px 30px 65px 50px;
+    position: relative;
+}
+
+.info-more i:hover,
+.info-more i:focus {
+    color: #e74c3c;
+    opacity: 0;
+    animation: fadeIn 0.5s infinite linear alternate-reverse;
+}
+
+@keyframes fadeIn {
+    0% {
+        .collection-line {
+            opacity: 0;
+        }
+    }
+
+    100% {
+        .collection-line {
+            opacity: 1;
+        }
+    }
+}
+
+/* browse-record */
+.browse-record {
+    padding-bottom: 15px;
+    /*box-shadow: -5px 0 10px -2px rgba(236, 236, 236, 0.86);*/
+}
+
+.browse-record-first-div {
+    padding-bottom: 10px;
+
+}
+
+#user {
+    position: relative;
+}
+
+#user input {
+    width: 65px;
+    height: 30px;
+    position: absolute;
+    top: 23px;
+    left: 21px;
+    display: none;
+    outline: none;
+}
+
+#user input:hover {
+    cursor: pointer;
+}
+
+#collect {
+    position: relative;
+}
+
+#collect .collect_off {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+#collect .collect_off:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.del-btn {
+    text-align: right;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+#del {
+    margin-right: 10px;
+}
+
+#del:hover {
+    cursor: pointer;
+    color: red;
+}

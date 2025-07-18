@@ -1,0 +1,150 @@
+.area-info {
+    margin-left: 5px;
+    padding-left: 5px;
+    font-size: 16px;
+    padding-bottom: 10px;
+    border-bottom: #ecf0f1 1px solid;
+}
+
+.info-line {
+    margin: 10px 0 55px 0;
+}
+
+.course-info span {
+    line-height: 37px;
+}
+
+.tj-header {
+    margin: 30px 0 10px;
+}
+
+.describe {
+    font-size: 15px;
+    color: #bdc3c7;
+}
+
+/* login */
+.m-header {
+    padding: 10px 16px 2px;
+}
+
+.login_form {
+    margin-top: 150px;
+}
+
+.form-info {
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.switch-info {
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 2px;
+}
+
+/* chanle */
+
+.collection-line {
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+    padding: 5px 0 25px;
+    margin: 20px 0;
+    background: #fff;
+    border-bottom: #ecf0f1 1px solid;
+}
+
+.collection-line-info {
+    font-size: 14px;
+}
+
+.collection-line-info .title {
+    margin-bottom: 4px;
+}
+
+.collection-line-info .title a {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    line-height: 20px;
+}
+
+.collection-line-info .title a:hover {
+    color: #17a2b8;
+}
+
+.collection-line-info div {
+    height: 30px;
+}
+
+.collection-line-info .attribute-text {
+    font-weight: 400;
+    color: #394043;
+    letter-spacing: 0.4px;
+    opacity: 0.8;
+}
+
+.collection-line-info .info-text {
+    font-weight: 500;
+    color: #394043;
+    letter-spacing: 0.2px;
+}
+
+/* more */
+.info-more {
+    text-align: center;
+}
+
+.info-more a {
+    font-weight: 400;
+    color: #17a2b8;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.info-more i {
+    padding: 65px 30px 65px 50px;
+    position: relative;
+}
+
+.info-more i:hover,
+.info-more i:focus {
+    color: #e74c3c;
+    opacity: 0;
+    animation: fadeIn 0.5s infinite linear alternate-reverse;
+}
+
+@keyframes fadeIn {
+    0% {
+        .collection-line {
+            opacity: 0;
+        }
+    }
+
+    100% {
+        .collection-line {
+            opacity: 0;
+        }
+    }
+}
+
+/* registe login*/
+.register-login-line {
+    margin: 0;
+}
+
+/* page */
+.my-page-line {
+    padding: 5px 0 2px;
+    margin: 10px 0 1px;
+    background: #fff;
+}
+
+/*hr*/
+hr {
+    margin: 2px;
+}

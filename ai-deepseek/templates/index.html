@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}"> 
+<div class="center-container">
+    <div id="header">
+        <h1 style="margin-bottom: 18px; color: #367dc7; font-weight: 700; letter-spacing: 2px;">智能聊天机器人</h1>
+        <div class="model-select">
+            <label for="model-select">选择模型：</label>
+            <select id="model-select">
+                <option value="gpt">GPT-3.5-Turbo</option>
+                <option value="gpt-4o-mini">GPT-4o-Mini</option>
+                <option value="deepseek">DeepSeek</option>
+            </select>
+        </div> 
+    </div>
+
+    <div id="chat-box"></div>
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="请输入你的问题..." autocomplete="off" required>
+        <button type="submit">发送</button>
+        <button type="button" id="clear-btn">清空</button>
+    </form>
+</div>
+<script>
+const chatBox = document.getElementById('chat-box');
+const chatForm = document.getElementById('chat-form');
+const userInput = document.getElementById('user-input');
+const modelSelect = document.getElementById('model-select');
+const clearBtn = document.getElementById('clear-btn');
+
+// 动态加载模型列表
+async function loadModels() {
+    try {
+        const res = await fetch('/models');
+        const data = await res.json();
+        modelSelect.innerHTML = '';
+        data.models.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.id;
+            opt.textContent = m.name;
+            modelSelect.appendChild(opt);
+        });
+    } catch (e) {
+        modelSelect.innerHTML = '<option>加载失败</option>';
+    }
+}
+loadModels();
+
+function appendMessage(role, text) {
+    // 创建外层容器
+    const msgRow = document.createElement('div');
+    msgRow.className = `msg-row ${role}`;
+
+    // 头像
+    let avatar = '';
+    if (role === 'user') {
+        avatar = '<img src="/static/user.png" class="avatar avatar-user">';
+    } else {
+        avatar = '<img src="/static/bot.png" class="avatar avatar-bot">';
+    }
+    const avatarDiv = document.createElement('div');
+    avatarDiv.className = 'avatar-box';
+    avatarDiv.innerHTML = avatar;
+
+    // 气泡
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `bubble ${role}`;
+    let label = '';
+    if (role === 'user') {
+        label = '<div style="font-size:13px;font-weight:600;color:#fff;opacity:0.8;margin-bottom:2px;"></div>';
+    } else {
+        label = '<div style="font-size:13px;font-weight:600;color:#367dc7;opacity:0.8;margin-bottom:2px;">智能机器人</div>';
+    }
+    msgDiv.innerHTML = label + text;
+
+    // 组装
+    if (role === 'user') {
+        msgRow.appendChild(msgDiv);
+        msgRow.appendChild(avatarDiv);
+    } else {
+        msgRow.appendChild(avatarDiv);
+        msgRow.appendChild(msgDiv);
+    }
+
+    chatBox.appendChild(msgRow);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// 页面加载时显示AI助手欢迎语
+window.onload = function() {
+    appendMessage('gpt', '你好！我是智能聊天机器人，有什么可以帮助你的吗？');
+};
+
+chatForm.onsubmit = async function(e) {
+    e.preventDefault();
+    const message = userInput.value.trim();
+    if (!message) return;
+    const model = modelSelect.value;
+    appendMessage('user', message);
+    userInput.value = '';
+    appendMessage('gpt', '<span style="color:gray">思考中...</span>');
+    const loadingDiv = chatBox.lastChild;
+    try {
+        const res = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message, model })
+        });
+        const data = await res.json();
+        loadingDiv.remove();
+        if (data.error) {
+            appendMessage('gpt', `<span style='color:red'>${data.error}</span>`);
+        } else {
+            appendMessage('gpt', data.reply);
+        }
+    } catch (err) {
+        loadingDiv.remove();
+        appendMessage('gpt', `<span style='color:red'>请求失败</span>`);
+    }
+};
+
+clearBtn.onclick = function() {
+    chatBox.innerHTML = '';
+    appendMessage('gpt', '你好！我是智能聊天机器人，有什么可以帮助你的吗？');
+};
+</script>
+{% endblock %}

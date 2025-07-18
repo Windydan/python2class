@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网页图标 -->
+    <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon" />
+
+    <!-- 字体样式 -->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 模板样式 -->
+    <link href="/static/css/clean-blog.min.css" rel="stylesheet">
+    <!--表单校验的JQ插件 -->
+    <link href="/static/css/bootstrapValidator.min.css" rel="stylesheet">
+    <!--  Bootstrap.css -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- JQ -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- 表单校验 -->
+    <script src="/static/js/bootstrapValidator.min.js"></script>
+    <!-- 图表插件 -->
+    <script src="/static/js/echarts.min.js"></script>
+    <script src="/static/vendor/echarts-stat/ecStat.min.js"></script>
+    <!-- cookie -->
+    <script src="/static/vendor/jquery/jquery.cookie.js"></script>
+    <script src="/static/js/clean-blog.min.js"></script>
+
+    <!-- 登陆校验 -->
+    <script src="/static/house/js/login.js"></script>
+
+    <title>二手好房</title>
+</head>
+
+<body>
+
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="/">二手好房</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">首页</a>
+                    </li>
+
+                    <li class="nav-item" id="user">
+                        {% if session.get('name') %} 
+                        <!--处于登录状态-->
+                        <!--用户名、退出登录-->
+                        <a id='u_name' class="nav-link" href="/user/{{ session.get('name') }}">{{ 
+                        session.get('name') }}</a>
+                        <a id='u_name' class="nav-link" href="/user">个人中心</a>
+                        {% else %} 
+                        <!-- 没有处于登录装填下，才显示登录按钮 -->
+                        <a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
+                        {% endif %}
+                    </li>
+                    {% if session.get('name') %}
+                    <li class="nav-item">
+                        <a class="nav-link" id="logout" href="">退出登录</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block body %}{% endblock %}
+
+    <!--注册登录-->
+    <div class="row info-line">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <!-- 注册窗口 -->
+            <div id="register" class="modal fade login_form" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body m-header">
+                            <button class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-title">
+                            <h1 class="text-center">注册</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-group" id="registeform" action="/register" method="post">
+                                <div class="form-group">
+                                    <label for="" class="form-info">用户名</label>
+                                    <input class="form-control" name="name" type="text" placeholder="6-10位字母或数字">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-info">密码</label>
+                                    <input class="form-control" name="password" type="password" placeholder="请输入密码">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-info">再次输入密码</label>
+                                    <input class="form-control" name="confirmPassword" type="password"
+                                        placeholder="请输入密码">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-info">邮箱</label>
+                                    <input class="form-control" name="email" type="email" placeholder="例如:123@123.com">
+                                </div>
+                                <div class="text-right">
+                                    <button  type="button" class="btn btn-primary" id='registe-btn'>提交</button>
+                                    <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                                </div>
+                                <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login"
+                                    class="switch-info">已有账号？点我登录</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 登录窗口 -->
+            <div id="login" class="modal fade login_form">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body m-header">
+                            <button class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-title">
+                            <h1 class="text-center">登录</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-group" id="loginform" action="/login" method="post">
+                                <div class="form-group">
+                                    <label for="" class="form-info">用户名</label>
+                                    <input class="form-control" name="name" type="text" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-info">密码</label>
+                                    <input class="form-control" name="password" type="password" placeholder="">
+                                </div>
+                                <div class="text-right">
+                                    <button    type="button" class="btn btn-primary" id='login-btn'>登录</button>
+                                    <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                                </div>
+                                <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register"
+                                    class="switch-info">还没有账号？点我注册</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 底部 -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p class="copyright text-muted">Copyright &copy; 二手好房 2019</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

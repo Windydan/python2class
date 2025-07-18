@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- 引入页面单独的样式 -->
+<link rel="stylesheet" href="/static/house/css/index.css">
+
+
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/static/img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>二手好房</h1>
+                    <span class="subheading">给您推荐优质房源</span>
+
+                    <!--智能搜索功能-->
+                    <div>
+                        <ul class="nav nav-tabs my-nav-tab" style="margin:15px 0 0 0">
+                            <li class="chanle1 active"><span>地区搜索</span></li>
+                            <li class="chanle2"><span>户型搜索</span></li>
+                        </ul>
+                        <form class="form-inline" role="form" id="my-form" action="/query">
+                            <div class="form-group">
+                                <label class="sr-only" for="txt">名称</label>
+                                <input type="text" class="form-control" id="txt" name='addr'
+                                    placeholder="请输入区域、商圈或小区名开始找房">
+                            </div>
+                            <button type="submit" class="my-btn btn btn-info" id="btn">提交</button>
+                            <ul id="list" class="list-group"></ul>
+                        </form>
+                    </div>
+
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <!--定位，数量-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="area-info">
+                <span style="color:#2980b9">当前城市:</span>
+                <span style="color:#e74c3c">北京</span>
+                &nbsp
+                <span style="color:#2980b9">房源总数:</span>
+                <span style="color:#e74c3c">1000</span>
+            </div>
+        </div>
+    </div>
+
+    <!--当前城市-->
+    <div class="row info-line">
+        <!-- 模块1标题 -->
+        <div class="col-lg-12 tj-header">
+            <h3>为您为家</h3>
+            <div class="describe">
+                <span>为您精准定位，当前城市房源信息</span>
+                <span class="float-right"><a href="/list"
+                        style="color: #3498db; padding-right: 5px">更多北京房源</a></span>
+            </div>
+        </div>
+        <!-- 模块1信息展示 -->
+    
+        <div class="col-lg-4">
+            <div class="course">
+                <div><a href="/house"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg"
+                            alt=""></a></div>
+                <div class="course-info">
+                    <span>北京</span>
+
+                </div>
+                <div class="course-info1">
+                    <span>2室1厅 - 120平方米</span>
+                    <span class="price float-right">￥&nbsp9999</span>
+                </div>
+            </div>
+        </div>
+       
+
+    </div>
+    <hr>
+
+    <!--热点推荐-->
+    <div class="row info-line">
+        <!-- 模块2标题 -->
+        <div class="col-lg-12 tj-header">
+            <h3>为您推荐</h3>
+            <div class="describe">
+                <span>热点房源，我们为你精选</span>
+                <span class="float-right"><a href="/list"
+                        style="color: #3498db; padding-right: 5px">更多热点房源</a></span>
+            </div>
+        </div>
+        <!-- 模块2内容 -->
+        <div class="col-lg-3">
+            <div class="course">
+                <div><a href="/house"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg"
+                            alt=""></a></div>
+                <div class="course-info">
+                    <span>广州</span>
+                </div>
+                <div class="course-info1">
+                    <span>3室1厅 - 200平方米</span>
+                    <span style="color: #3498db">&nbsp&nbsp<i class="fa fa-heart" aria-hidden="true">&nbsp热度8888</i></span>
+                    <span class="price float-right">￥99999</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+</div>
+
+{% endblock %}

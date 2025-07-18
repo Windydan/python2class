@@ -1,0 +1,179 @@
+/* 全局基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, rgb(100, 167, 231), rgb(240, 170, 198));
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 居中容器 */
+.center-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 聊天框 */
+#chat-box {
+    width: 100%;
+    width: 900px;
+    height: 500px;
+    min-height: 500px;
+    border-radius: 16px;
+    border: 1px solid #e3e3e3;
+    background: #fff;
+    box-shadow: 10px 10px 5px rgba(60,60,60,0.08);
+    overflow-y: auto;
+    margin-bottom: 18px;
+    padding: 18px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+/* 聊天气泡 */
+.bubble {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-break: break-word;
+    font-size: 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px 0 rgba(60,60,60,0.04);
+}
+.bubble.user {
+    background: linear-gradient(90deg, #6ec1e4 0%, #367dc7 100%);
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 0;
+    text-align: right;
+    border-top-right-radius: 4px;
+}
+.bubble.gpt {
+    background: #f3f6fa;
+    color: #222;
+    align-self: flex-start;
+    border-top-left-radius: 4px;
+}
+
+/* 聊天表单 */
+#chat-form {
+    display: flex;
+    gap: 10px;
+    max-width: 900px;
+    width: 100%;
+}
+
+/* 输入框 */
+#user-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #cfd8dc;
+    font-size: 16px;
+    outline: none;
+    background: #f8fafc;
+    transition: border 0.2s;
+}
+#user-input:focus {
+    border: 1.5px solid #367dc7;
+}
+
+/* 按钮 */
+button[type="submit"], #clear-btn {
+    background: linear-gradient(90deg, #6ec1e4 0%, #367dc7 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(60,60,60,0.04);
+    height: 40px;
+}
+button[type="submit"]:hover, #clear-btn:hover {
+    background: linear-gradient(90deg, #367dc7 0%, #6ec1e4 100%);
+}
+
+/* 模型选择 */
+.model-select {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    color:white;
+}
+
+/* 响应式 */
+@media (max-width: 1000px) {
+    #chat-box, #chat-form {
+        max-width: 98vw;
+    }
+}
+.msg-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+/* 机器人消息整体靠左，头像在左，气泡在右 */
+.msg-row.gpt {
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.msg-row.gpt .avatar-box {
+    order: 0;
+    margin-right: 8px;
+    margin-left: 0;
+}
+.msg-row.gpt .bubble {
+    order: 1;
+}
+
+/* 用户消息整体靠右，气泡在左，头像在右 */
+.msg-row.user {
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.msg-row.user .bubble {
+    order: 0;
+    margin-right: 0;
+    margin-left: 0;
+}
+.msg-row.user .avatar-box {
+    order: 1;
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+/* 头像通用样式 */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    vertical-align: middle;
+    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin: 0;
+}
+.bubble {
+    max-width: 70%;
+    word-break: break-word;
+} 

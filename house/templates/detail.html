@@ -1,0 +1,729 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="/static/house/css/detail.css">
+
+<header class="masthead no-margin-bottom" style="background-color: #fff">
+    <div class="overlay"></div>
+    <div class="container">
+        <!--内容-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 mx-auto detail-body">
+                <div class="row info-line">
+                    <!--大标题-->
+                    <div class="col-lg-12 col-md-12 detail-header">
+                        <h3>23322&nbsp545656</h3>
+                        <div class="describe">
+                            <span>为您精准定位，当前城市房源信息</span>
+                        </div>
+                    </div>
+                    <!--左详情-->
+                    <div class="col-lg-8 col-md-8">
+                        <div class="course">
+
+                            <!--图-->
+                            <div><a href="#"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg" alt=""></a>
+                            </div>
+                            <!--价格-->
+                            <div class="house-info">
+                                <span class="price">￥&nbsp99999/月</span>
+                                <span class="collection" id="btn-collection">
+                                    <a>
+                                        <i class="fa fa-heart" aria-hidden="true"> 收藏</i>
+                                    </a>
+                                </span>
+                            </div>
+
+                            <!--基本信息标题-->
+                            <div class="attribute-header">
+                                <h4>基本信息</h4>
+                            </div>
+                            <!--属性1-->
+                            <div class="row attribute-info">
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="attribute-text">基本属性</span>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div>
+                                        <span class="attribute-text">房屋户型：</span>
+                                        <span class="info-text">5</span>
+                                    </div>
+                                    <div>
+                                        <span class="attribute-text">建筑面积：</span>
+                                        <span class="info-text">200平方米</span>
+                                    </div>
+                                    <div>
+                                        <span class="attribute-text">房屋朝向：</span>
+                                        <span class="info-text">888</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div>
+                                        <span class="attribute-text">所在区域：</span>
+                                        <span class="info-text">6776</span>
+                                    </div>
+                                    <div>
+                                        <span class="attribute-text">租住类型：</span>
+                                        <span class="info-text">5656556</span>
+                                    </div>
+                                    <div>
+                                        <span class="attribute-text">房东电话：</span>
+                                        <span class="info-text">5455</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--属性2-->
+                            <div class="row attribute-info">
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="attribute-text">房屋卖点</span>
+                                </div>
+                                <div class="col-lg-8 col-md-8">
+                                    <div>
+                                        <span class="attribute-text">交通条件：</span>
+                                        <span class="info-text">55555</span>
+                                    </div>
+                                    <div>
+                                        <span class="attribute-text">优势条件：</span>
+                                        <span class="info-text">8888</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--房源配套设施-->
+                            <div class="attribute-header">
+                                <h4>房源配套设施</h4>
+                            </div>
+                            <!--设施列表-->
+                            <div class="row attribute-info">
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-1"></span>
+
+                                    <!-- {% if '冰箱' in facilities %} -->
+                                    <!-- <span class="attribute-text-sm" style="color: #f1c40f">冰箱</span> -->
+                                    <!-- {% else %} -->
+                                    <span class="attribute-text-sm"><s>冰箱</s></span>
+                                    <!-- {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-2"></span>
+                                    <!-- {% if '洗衣机' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">洗衣机</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>洗衣机</s></span>
+                                    {% endif %} -->
+
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-3"></span>
+
+                                    <!-- {% if '电视' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">电视</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>电视</s></span>
+                                    {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-4"></span>
+
+                                    <!-- {% if '空调' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">空调</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>空调</s></span>
+                                    {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-5"></span>
+
+                                    <!-- {% if '暖气' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">暖气</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>暖气</s></span>
+                                    {% endif %} -->
+
+                                </div>
+                            </div>
+                            <div class="row attribute-info">
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-6"></span>
+
+                                    <!-- {% if '热水器' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">热水器</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>热水器</s></span>
+                                    {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-7"></span>
+
+                                    <!-- {% if '天然气' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">天然气</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>天然气</s></span>
+                                    {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-8"></span>
+
+                                    <!-- {% if '床' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">床</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>床</s></span>
+                                    {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-9"></span>
+
+                                    <!-- {% if '宽带' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">Wi-Fi</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>Wi-Fi</s></span>
+                                    {% endif %} -->
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <span class="icon-10"></span>
+
+                                    <!-- {% if '电梯' in facilities %} -->
+                                    <span class="attribute-text-sm" style="color: #f1c40f">电梯</span>
+                                    <!-- {% else %}
+                                    <span class="attribute-text-sm"><s>电梯</s></span>
+                                    {% endif %} -->
+                                </div>
+                            </div>
+
+                            <!--推荐标题-->
+                            <div class="attribute-header">
+                                <h4>推荐房源</h4>
+                                <div class="attribute-header-tip-line">
+                                    <span>根据您的浏览习惯，推荐优质房源</span>
+                                </div>
+                            </div>
+                            <!--推荐-->
+                            <div class="row">
+                                <div class="col-md-11 col-lg-11">
+                                    <div class="row">
+                                        <!-- {% for house in recommend_li %} -->
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="recommend">
+                                                <div><a href=""><img class='img-fluid img-box'
+                                                            src="/static/img/house-bg1.jpg" alt=""></a>
+                                                </div>
+                                                <div class="recommend-info">
+                                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                                    <span>34434343</span>
+                                                </div>
+                                                <div class="recommend-info1">
+                                                    <span>4343-5555平方米</span>
+                                                    <span class="price float-right"
+                                                        style="color: #e74c3c">￥&nbsp44343433</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- {% endfor %} -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--右边栏-->
+                    <div class="col-lg-4 col-md-4">
+                        <div class="row">
+
+                            <!--line-->
+                            <div class="col-lg-12 col-md-12 mx-auto attribute-header">
+                                <h4><i class="fa fa-align-right" aria-hidden="true"></i>&nbsp&nbsp34243
+                                    价格走势</h4>
+                                <div class="attribute-header-tip-line">
+                                    <span>人工智能算法，为您预测房价走势</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mx-auto browse-record-first-div self-no-padding">
+                                <div id="f_line" class="echarts-tu">
+                                </div>
+                            </div>
+
+                            <!--pie-->
+                            <div class="col-lg-12 col-md-12 mx-auto attribute-header">
+                                <h4><i class="fa fa-align-right" aria-hidden="true"></i>&nbsp&nbsp343244
+                                    户型占比</h4>
+                                <div class="attribute-header-tip-line">
+                                    <span>根据户型占比，了解户型稀缺度</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mx-auto browse-record-first-div self-no-padding">
+                                <div id="pie">
+                                </div>
+                            </div>
+
+                            <!--pie2-->
+                            <div class="col-lg-12 col-md-12 mx-auto attribute-header">
+                                <h4><i class="fa fa-align-right" aria-hidden="true"></i>&nbsp&nbsp43424
+                                    小区房源数量TOP20</h4>
+                                <div class="attribute-header-tip-line">
+                                    <span>关注房源数量，了解房源热点</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mx-auto browse-record-first-div self-no-padding">
+                                <div id="scolumn_line">
+                                </div>
+                            </div>
+
+                            <!--line2-->
+                            <div class="col-lg-12 col-md-12 mx-auto attribute-header">
+                                <h4><i class="fa fa-align-right" aria-hidden="true"></i>&nbsp&nbsp434242
+                                    户型价格走势</h4>
+                                <div class="attribute-header-tip-line">
+                                    <span>关注房源单价，了解各小区房价</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mx-auto browse-record-first-div self-no-padding">
+                                <div id="broken_line">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    $(window).ready(function () {
+        // 价格走势
+        echarts.registerTransform(ecStat.transform.regression);
+        const data_price = [
+            [0.901144, 4.621899],
+            [0.958476, 4.580768],
+            [0.274561, 3.620992],
+            [0.394396, 3.580501],
+            [0.87248, 4.618706],
+            [0.409932, 3.676867],
+            [0.908969, 4.641845],
+            [0.166819, 3.175939],
+            [0.665016, 4.26498],
+            [0.263727, 3.558448],
+            [0.231214, 3.436632],
+            [0.552928, 3.831052],
+            [0.047744, 3.182853],
+            [0.365746, 3.498906],
+            [0.495002, 3.946833],
+            [0.493466, 3.900583],
+            [0.792101, 4.238522],
+            [0.76966, 4.23308],
+            [0.251821, 3.521557],
+            [0.181951, 3.203344],
+            [0.808177, 4.278105],
+            [0.334116, 3.555705],
+            [0.33863, 3.502661],
+            [0.452584, 3.859776],
+            [0.69477, 4.275956],
+            [0.590902, 3.916191],
+            [0.307928, 3.587961],
+            [0.148364, 3.183004],
+            [0.70218, 4.225236],
+            [0.721544, 4.231083],
+            [0.666886, 4.240544],
+            [0.124931, 3.222372],
+            [0.618286, 4.021445],
+            [0.381086, 3.567479],
+            [0.385643, 3.56258],
+            [0.777175, 4.262059],
+            [0.116089, 3.208813],
+            [0.115487, 3.169825],
+            [0.66351, 4.193949],
+            [0.254884, 3.491678],
+            [0.993888, 4.533306],
+            [0.295434, 3.550108],
+            [0.952523, 4.636427],
+            [0.307047, 3.557078],
+            [0.277261, 3.552874],
+            [0.279101, 3.494159],
+            [0.175724, 3.206828],
+            [0.156383, 3.195266],
+            [0.733165, 4.221292],
+            [0.848142, 4.413372],
+            [0.771184, 4.184347],
+            [0.429492, 3.742878],
+            [0.162176, 3.201878],
+            [0.917064, 4.648964],
+            [0.315044, 3.510117],
+            [0.201473, 3.274434],
+            [0.297038, 3.579622],
+            [0.336647, 3.489244],
+            [0.666109, 4.237386],
+            [0.583888, 3.913749],
+            [0.085031, 3.22899],
+            [0.687006, 4.286286],
+            [0.949655, 4.628614],
+            [0.189912, 3.239536],
+            [0.844027, 4.457997],
+            [0.333288, 3.513384],
+            [0.427035, 3.729674],
+            [0.466369, 3.834274],
+            [0.550659, 3.811155],
+            [0.278213, 3.598316],
+            [0.918769, 4.692514],
+            [0.886555, 4.604859],
+            [0.569488, 3.864912],
+            [0.066379, 3.184236],
+            [0.335751, 3.500796],
+            [0.426863, 3.743365],
+            [0.395746, 3.622905],
+            [0.694221, 4.310796],
+            [0.27276, 3.583357],
+            [0.503495, 3.901852],
+            [0.067119, 3.233521],
+            [0.038326, 3.105266],
+            [0.599122, 3.865544],
+            [0.947054, 4.628625],
+            [0.671279, 4.231213],
+            [0.434811, 3.791149],
+            [0.509381, 3.968271],
+            [0.749442, 4.25391],
+            [0.058014, 3.19471],
+            [0.482978, 3.996503],
+            [0.466776, 3.904358],
+            [0.357767, 3.503976],
+            [0.949123, 4.557545],
+            [0.41732, 3.699876],
+            [0.920461, 4.613614],
+            [0.156433, 3.140401],
+            [0.656662, 4.206717],
+            [0.616418, 3.969524],
+            [0.853428, 4.476096],
+            [0.133295, 3.136528],
+            [0.693007, 4.279071],
+            [0.178449, 3.200603],
+            [0.199526, 3.299012],
+            [0.073224, 3.209873],
+            [0.286515, 3.632942],
+            [0.182026, 3.248361],
+            [0.621523, 3.995783],
+            [0.344584, 3.563262],
+            [0.398556, 3.649712],
+            [0.480369, 3.951845],
+            [0.15335, 3.145031],
+            [0.171846, 3.181577],
+            [0.867082, 4.637087],
+            [0.223855, 3.404964],
+            [0.528301, 3.873188],
+            [0.890192, 4.633648],
+            [0.106352, 3.154768]
+       
+        ];
+        let priceDom = document.getElementById("f_line");
+        let priceEcharts = echarts.init(priceDom);
+        let priceOption = {
+            dataset: [
+                {
+                    source: data_price
+                },
+                {
+                    transform: {
+                        type: 'ecStat:regression'
+                        // 'linear' by default.
+                        // config: { method: 'linear', formulaOn: 'end'}
+                    }
+                }
+            ],
+            title: {
+                text: 'Linear Regression',
+                subtext: 'By ecStat.regression',
+                sublink: 'https://github.com/ecomfe/echarts-stat',
+                left: 'center'
+            },
+            legend: {
+                bottom: 5
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            xAxis: {
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed'
+                    }
+                }
+            },
+            yAxis: {
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed'
+                    }
+                }
+            },
+            series: [
+                {
+                    name: 'scatter',
+                    type: 'scatter'
+                },
+                {
+                    name: 'line',
+                    type: 'line',
+                    datasetIndex: 1,
+                    symbolSize: 0.1,
+                    symbol: 'circle',
+                    label: { show: true, fontSize: 16 },
+                    labelLayout: { dx: -20 },
+                    encode: { label: 2, tooltip: 1 }
+                }
+            ]
+        };
+
+        priceOption && priceEcharts.setOption(priceOption);
+        //  let priceDom = document.getElementById("f_line");
+        // let priceEcharts = echarts.init(priceDom);
+        // let priceOption = {
+        //     xAxis: {},
+        //     grid: {
+        //         show: true,//是否显示直角坐标系的网格,true显示，false不显示
+        //         left: '5%',//grid组件离容器左侧的距离
+        //         containLabel: true,//grid 区域是否包含坐标轴的刻度标签，在无法确定坐标轴标签的宽度，容器有比较小无法预留较多空间的时候，可以设为 true 防止标签溢出容器。
+        //         // width: '360px',
+        //         right: '0%',
+        //         top: '10%',
+        //     },
+        //     yAxis: {
+        //         type: 'value',
+        //         min: 1.5,
+        //         splitLine: {
+        //             lineStyle: {
+        //                 type: 'dashed'
+        //             }
+        //         },
+        //         name: '平均价格/元',
+        //         nameLocation: 'center',
+        //         nameGap: 30
+        //     },
+        //     series: [
+        //         {
+        //             symbolSize: 20,
+        //             data: [
+        //                 [10.0, 8.04],
+        //                 [8.07, 6.95],
+        //                 [13.0, 7.58],
+        //                 [9.05, 8.81],
+        //                 [11.0, 8.33],
+        //                 [14.0, 7.66],
+        //                 [13.4, 6.81],
+        //                 [10.0, 6.33],
+        //                 [14.0, 8.96],
+        //                 [12.5, 6.82],
+        //                 [9.15, 7.2],
+        //                 [11.5, 7.2],
+        //                 [3.03, 4.23],
+        //                 [12.2, 7.83],
+        //                 [2.02, 4.47],
+        //                 [1.05, 3.33],
+        //                 [4.05, 4.96],
+        //                 [6.03, 7.24],
+        //                 [12.0, 6.26],
+        //                 [12.0, 8.84],
+        //                 [7.08, 5.82],
+        //                 [5.02, 5.68]
+        //             ],
+        //             type: 'scatter'
+        //         }
+        //     ]
+        // };
+
+        // priceOption && priceEcharts.setOption(priceOption);
+
+
+        // 户型占比
+        let houeTypeDom = document.getElementById("pie");
+        let houeTypecharts = echarts.init(houeTypeDom);
+        let houeTypeOption = {
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                show: false
+            },
+            series: [
+                {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: 1048, name: 'Search Engine' },
+                        { value: 735, name: 'Direct' },
+                        { value: 580, name: 'Email' },
+                        { value: 484, name: 'Union Ads' },
+                        { value: 300, name: 'Video Ads' },
+                        { value: 108, name: 'Search Engine' },
+                        { value: 75, name: 'Direct' },
+                        { value: 550, name: 'Email' },
+                        { value: 484, name: 'Union Ads' },
+                        { value: 300, name: 'Video Ads' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        houeTypeOption && houeTypecharts.setOption(houeTypeOption);
+
+        //房源数量
+        // prettier-ignore
+        let dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
+        // prettier-ignore
+        let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+        let yMax = 500;
+        let dataShadow = [];
+        for (let i = 0; i < data.length; i++) {
+            dataShadow.push(yMax);
+        }
+
+        let houeNumDom = document.getElementById("scolumn_line");
+        let houeNumcharts = echarts.init(houeNumDom);
+        let houeNumOption = {
+            // title: {
+            //     text: '特性示例：渐变色 阴影 点击缩放',
+            //     subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+            // },
+            xAxis: {
+                data: dataAxis,
+                axisLabel: {
+                    inside: true,
+                    color: '#fff'
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                z: 10
+            },
+            yAxis: {
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    color: '#999'
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'inside'
+                }
+            ],
+            series: [
+                {
+                    type: 'bar',
+                    showBackground: true,
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: '#83bff6' },
+                            { offset: 0.5, color: '#188df0' },
+                            { offset: 1, color: '#188df0' }
+                        ])
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: '#2378f7' },
+                                { offset: 0.7, color: '#2378f7' },
+                                { offset: 1, color: '#83bff6' }
+                            ])
+                        }
+                    },
+                    data: data
+                }
+            ]
+        };
+
+        houeNumOption && houeNumcharts.setOption(houeNumOption);
+
+        // Enable data zoom when user click bar.
+        const zoomSize = 6;
+        houeNumcharts.on('click', function (params) {
+            console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+            houeNumcharts.dispatchAction({
+                type: 'dataZoom',
+                startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                endValue:
+                    dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+            });
+        });
+
+
+        //户型价格走势
+        let typePriceDom = document.getElementById("broken_line");
+        let typePricecharts = echarts.init(typePriceDom);
+        let typePriceOption = {
+
+            // title: {
+            //     text: 'Stacked Line'
+            // },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: 'Email',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: 'Union Ads',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name: 'Video Ads',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name: 'Direct',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [320, 332, 301, 334, 390, 330, 320]
+                }
+            ]
+
+        };
+
+        typePriceOption && typePricecharts.setOption(typePriceOption);
+
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="/static/house/css/user.css">
+
+<header class="masthead no-margin-bottom" style="background-color: #fff; min-height: 500px">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 col-md-8 mx-auto detail-body">
+                <ul class="nav nav-tabs" style="margin:10px 0 30px">
+                    <li class="active chanle1"><a href="#userinfo">账号信息</a></li>
+                    <li class="chanle2"><a href="#collections">房源收藏</a></li>
+                </ul>
+                <!-- 个人信息 -->
+                <div class="user-info">
+                    <input value="" id="n-data" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-8 c-1">
+                            <span>昵称：</span>
+                            <span class="nkname">3333</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <button class="btn-info c-2" id="btn-name"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"> 编辑</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <input value="" id="a-data" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-8 c-1">
+                            <span>住址：</span>
+                            <span class="nkaddr">55555</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <button class="btn-info c-2" id="btn-addr"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"> 编辑</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <input value="" id="p-data" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-8 c-1">
+                            <span>密码：</span>
+                            <span class="nkpd">4444</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <button class="btn-info c-2" id="btn-pd"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"> 编辑</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <input value="" id="e-data" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-8 c-1">
+                            <span>邮箱：</span>
+                            <span class="nkemail">444444</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <button class="btn-info c-2" id="btn-email"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"> 编辑</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--收藏列表-->
+                <div class="collection">
+                    <div class="row collection-line" id="collect">
+                        <span class="collect_off" id="">取消收藏</span>
+                        <div class="col-lg-4 col-md-4 mx-auto">
+                            <div>
+                                <a href="/house">
+                                    <img class='img-fluid img-box' src="/static/img/house-bg1.jpg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mx-auto">
+                            <div class="collection-line-info">
+                                <div>
+                                    <span class="attribute-text">房源地址：</span>
+                                    &nbsp
+                                    <span class="info-text">5555</span>
+                                </div>
+                                <div>
+                                    <span class="attribute-text">建筑面积：</span>
+                                    &nbsp
+                                    <span class="info-text">6666平方米</span>
+                                </div>
+                                <div>
+                                    <span class="attribute-text">房源户型：</span>
+                                    &nbsp
+                                    <span class="info-text">7777</span>
+                                </div>
+                                <div>
+                                    <span class="attribute-text">房源朝向：</span>
+                                    &nbsp
+                                    <span class="info-text">8888</span>
+                                </div>
+                                <div>
+                                    <span class="attribute-text">房源价格：</span>
+                                    &nbsp
+                                    <span class="info-text" style="color: #e74c3c">￥&nbsp7777</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 mx-auto" style="height: 100px; margin-top: 40px;">
+                            <div class="info-more"
+                                style="width: 100%; height: 100%; position: relative; overflow: hidden;">
+                                <span><a href="/house"
+                                        style="position: absolute; top:-30px; left: -1px; height: 20px;"><i
+                                            class="fa fa-arrow-right" aria-hidden="true"></i></a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!--浏览记录-->
+            <div class="col-lg-4 col-md-4 mx-auto detail-body">
+                <div class="row browse-record">
+                    <div class="col-lg-10 col-md-10 mx-auto">
+                        <h3 style="margin:20px 0 15px">浏览记录</h3>
+
+                    </div>
+                    <div class="col-lg-10 col-md-10 mx-auto del-btn">
+                        <span id="del">清空浏览记录</span>
+                    </div>
+                    <div style="overflow: scroll; height:680px;">
+
+
+                        <div class="col-lg-10 col-md-10 mx-auto browse-record-first-div">
+                            <div class="course">
+                                <div><a href="/house"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg"
+                                            alt=""></a>
+                                </div>
+                                <div class="course-info">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                    <span>55555</span>
+                                </div>
+                                <div class="course-info1">
+                                    <span>6666-200平方米</span>
+                                    <span class="price">￥&nbsp8888</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+<script>
+    $(".nav-tabs li").click(function () {
+        let status = $(this).hasClass("chanle1")
+        if (status) {
+            $(".user-info").show();
+            $(".collection").hide()
+            $(".chanle1").addClass("active")
+        }
+        else {
+            $(".user-info").hide();
+            $(".collection").show()
+        }
+        $(this).addClass("active").siblings().removeClass("active")
+    })
+</script>
+{% endblock %}
