@@ -77,7 +77,7 @@ $(document).ready(function () {
                             $('#registeform').data('bootstrapValidator', null);
                         }
                     } else {
-                        window.location.href = "/user";
+                        window.location.href = "/user/" + result['msg'];
                     }
                 }
             });
@@ -134,7 +134,7 @@ $(document).ready(function () {
                             $('#loginform').data('bootstrapValidator', null);
                         }
                     } else {
-                        window.location.href = "/user";
+                        window.location.href = "/user/" + result['msg'];
                     }
                 }
             });

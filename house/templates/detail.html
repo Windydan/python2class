@@ -286,10 +286,12 @@
         </div>
     </div>
 </header>
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/vendor/echarts-stat/ecStat.min.js"></script>
 <script>
     $(window).ready(function () {
         // 价格走势
-        echarts.registerTransform(ecStat.transform.regression);
+        ecStat.regression('lenear');
         const data_price = [
             [0.901144, 4.621899],
             [0.958476, 4.580768],
@@ -408,7 +410,7 @@
             [0.528301, 3.873188],
             [0.890192, 4.633648],
             [0.106352, 3.154768]
-       
+
         ];
         let priceDom = document.getElementById("f_line");
         let priceEcharts = echarts.init(priceDom);

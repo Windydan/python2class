@@ -11,62 +11,44 @@
                     <li class="active chanle1"><a href="#userinfo">账号信息</a></li>
                     <li class="chanle2"><a href="#collections">房源收藏</a></li>
                 </ul>
-                <!-- 个人信息 -->
-                <div class="user-info">
-                    <input value="" id="n-data" style="display: none">
-                    <div class="row">
-                        <div class="col-lg-8 c-1">
-                            <span>昵称：</span>
-                            <span class="nkname">3333</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <button class="btn-info c-2" id="btn-name"><i class="fa fa-pencil-square-o"
-                                    aria-hidden="true"> 编辑</i>
-                            </button>
+                <!-- 个人信息表单 -->
+                <form id="user-edit-form" autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">昵称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="nickname" name="name" value="" disabled>
                         </div>
                     </div>
-
-                    <input value="" id="a-data" style="display: none">
-                    <div class="row">
-                        <div class="col-lg-8 c-1">
-                            <span>住址：</span>
-                            <span class="nkaddr">55555</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <button class="btn-info c-2" id="btn-addr"><i class="fa fa-pencil-square-o"
-                                    aria-hidden="true"> 编辑</i>
-                            </button>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">住址：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="addr" name="addr" value="" disabled>
                         </div>
                     </div>
-
-                    <input value="" id="p-data" style="display: none">
-                    <div class="row">
-                        <div class="col-lg-8 c-1">
-                            <span>密码：</span>
-                            <span class="nkpd">4444</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <button class="btn-info c-2" id="btn-pd"><i class="fa fa-pencil-square-o"
-                                    aria-hidden="true"> 编辑</i>
-                            </button>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">密码：</label>
+                        <div class="col-lg-8 input-group">
+                            <input type="password" class="form-control" id="password" name="password" value="" disabled>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="togglePwd" style="cursor:pointer;"><i class="fa fa-eye-slash"></i></span>
+                            </div>
                         </div>
                     </div>
-
-                    <input value="" id="e-data" style="display: none">
-                    <div class="row">
-                        <div class="col-lg-8 c-1">
-                            <span>邮箱：</span>
-                            <span class="nkemail">444444</span>
-                        </div>
-                        <div class="col-lg-4">
-                            <button class="btn-info c-2" id="btn-email"><i class="fa fa-pencil-square-o"
-                                    aria-hidden="true"> 编辑</i>
-                            </button>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">邮箱：</label>
+                        <div class="col-lg-8">
+                            <input type="email" class="form-control" id="email" name="email" value="" disabled>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group row">
+                        <div class="col-lg-10 text-right">
+                            <button type="button" class="btn btn-info" id="edit-user-info">编辑</button>
+                            <button type="button" class="btn btn-primary" id="save-user-info" style="display:none;">保存</button>
+                        </div>
+                    </div>
+                </form>
                 <!--收藏列表-->
-                <div class="collection">
+                <div class="collection" style="display:none;">
                     <div class="row collection-line" id="collect">
                         <span class="collect_off" id="">取消收藏</span>
                         <div class="col-lg-4 col-md-4 mx-auto">
@@ -153,22 +135,141 @@
                 </div>
             </div>
         </div>
-    </div>
 
 </header>
 <script>
+
+$(function(){
+      // 1. 页面加载时获取用户信息并填充表单
+      function loadUserInfo() {
+        $.ajax({
+            url: '/user/info', // 假设后端有这个接口，返回JSON
+            type: 'GET',
+            dataType: 'json',
+            success: function(res){
+                if(res.valid == '1'){
+                    $('#nickname').val(res.data.name);
+                    $('#addr').val(res.data.addr);
+                    $('#email').val(res.data.email);
+                    // 密码字段显示加密后的密文
+                    $('#password').val(res.data.password);
+                }
+            }
+        });
+    }
+    loadUserInfo();
+
+    // 2. 编辑按钮点击，表单可编辑（包括昵称）
+    $('#edit-user-info').on('click', function(){
+        $('#nickname, #addr, #email,#password').prop('disabled', false);
+        // 清空密码字段，让用户输入新密码
+        $('#password').val('');
+        $('#edit-user-info').hide();
+        $('#save-user-info').show();
+    });
+
+    // 3. 保存按钮点击，提交表单
+    $('#save-user-info').on('click', function(){
+        // 表单校验
+        var name = $('#nickname').val().trim();
+        var email = $('#email').val().trim();
+        var password = $('#password').val().trim();
+        var addr = $('#addr').val().trim();
+        
+        // 昵称校验 - 必填
+        if (!name) {
+            alert('昵称不能为空！');
+            return;
+        }
+        if (name.length < 6 || name.length > 15) {
+            alert('昵称长度必须在6到15位之间！');
+            return;
+        }
+        if (!/^[a-zA-Z0-9_\.]+$/.test(name)) {
+            alert('昵称只能包含大写、小写、数字和下画线！');
+            return;
+        }
+        
+        // 邮箱校验 - 可选，但如果填写了必须格式正确
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('无效的邮箱地址！');
+            return;
+        }
+        
+        // 密码校验（如果输入了密码）
+        if (password && password === name) {
+            alert('密码不能与昵称相同！');
+            return;
+        }
+        
+        var data = {
+            name: name,
+            addr: addr,
+            email: email,
+            password: password
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/user/update',
+            data: data,
+            dataType: 'json',
+            success: function(res){
+                if(res.valid == '1'){
+                    alert('保存成功！');
+                    // 保存后表单恢复只读，按钮切换
+                    $('#nickname, #addr, #email, #password').prop('disabled', true);
+                    $('#edit-user-info').show();
+                    $('#save-user-info').hide();
+                    // 更新主页显示的昵称和路由
+                    updateUserDisplay(res.data.name);
+                }else{
+                    alert(res.msg || '保存失败！');
+                }
+            },
+            error: function(){
+                alert('请求失败！');
+            }
+        });
+    });
+    
+    // 更新主页显示的昵称和路由
+    function updateUserDisplay(newName) {
+        // 更新导航栏中的用户名显示
+        $('#u_name').text(newName);
+        $('#u_name').attr('href', '/user/' + newName);
+        // 更新当前页面的URL（不刷新页面）
+        if (window.history && window.history.pushState) {
+            window.history.pushState({}, '', '/user/' + newName);
+        }
+    }
+
+    // 密码小眼睛切换明文/密文
+    $('#togglePwd').on('click', function(){
+        var pwdInput = $('#password');
+        var icon = $(this).find('i');
+        if(pwdInput.attr('type') === 'password'){
+            pwdInput.attr('type', 'text');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }else{
+            pwdInput.attr('type', 'password');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        }
+    });
+
+    // tab切换逻辑
     $(".nav-tabs li").click(function () {
         let status = $(this).hasClass("chanle1")
         if (status) {
-            $(".user-info").show();
-            $(".collection").hide()
+            $("#user-edit-form").show();
+            $(".collection").hide();
             $(".chanle1").addClass("active")
         }
         else {
-            $(".user-info").hide();
-            $(".collection").show()
+            $("#user-edit-form").hide();
+            $(".collection").show();
         }
         $(this).addClass("active").siblings().removeClass("active")
-    })
+    });
+});
 </script>
 {% endblock %}

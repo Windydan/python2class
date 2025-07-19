@@ -61,7 +61,7 @@
                         <!--用户名、退出登录-->
                         <a id='u_name' class="nav-link" href="/user/{{ session.get('name') }}">{{ 
                         session.get('name') }}</a>
-                        <a id='u_name' class="nav-link" href="/user">个人中心</a>
+                        <!-- <a id='u_name' class="nav-link" href="/user">个人中心</a> -->
                         {% else %} 
                         <!-- 没有处于登录装填下，才显示登录按钮 -->
                         <a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
