@@ -63,27 +63,31 @@
             <h3>为您为家</h3>
             <div class="describe">
                 <span>为您精准定位，当前城市房源信息</span>
-                <span class="float-right"><a href="/list"
-                        style="color: #3498db; padding-right: 5px">更多北京房源</a></span>
+                <span class="float-right"><a href="/list" style="color: #3498db; padding-right: 5px">更多北京房源</a></span>
             </div>
         </div>
         <!-- 模块1信息展示 -->
-    
+        {% for item in new_list %}
         <div class="col-lg-4">
             <div class="course">
-                <div><a href="/house"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg"
-                            alt=""></a></div>
+                <div>
+                    <a href="/house">
+                        <img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}"
+                            alt="">
+                    </a>
+                </div>
                 <div class="course-info">
-                    <span>北京</span>
+                    <span>{{item['address']}}</span>
 
                 </div>
                 <div class="course-info1">
-                    <span>2室1厅 - 120平方米</span>
-                    <span class="price float-right">￥&nbsp9999</span>
+                    <span>{{item['rooms']}} - {{item.area}}平方米</span>
+                    <span class="price float-right">￥&nbsp{{item.price}}</span>
                 </div>
             </div>
         </div>
-       
+        {% endfor %}
+
 
     </div>
     <hr>
@@ -95,28 +99,143 @@
             <h3>为您推荐</h3>
             <div class="describe">
                 <span>热点房源，我们为你精选</span>
-                <span class="float-right"><a href="/list"
-                        style="color: #3498db; padding-right: 5px">更多热点房源</a></span>
+                <span class="float-right"><a href="/list" style="color: #3498db; padding-right: 5px">更多热点房源</a></span>
             </div>
         </div>
         <!-- 模块2内容 -->
+        {% for item in hot_list %}
         <div class="col-lg-3">
             <div class="course">
-                <div><a href="/house"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg"
-                            alt=""></a></div>
+                <div>
+                    <a href="/house">
+                        <img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}"
+                            alt="">
+                    </a>
+                </div>
                 <div class="course-info">
-                    <span>广州</span>
+                    <span>{{item['address']}}</span>
                 </div>
                 <div class="course-info1">
-                    <span>3室1厅 - 200平方米</span>
-                    <span style="color: #3498db">&nbsp&nbsp<i class="fa fa-heart" aria-hidden="true">&nbsp热度8888</i></span>
-                    <span class="price float-right">￥99999</span>
+                    <span>{{item['rooms']}} - {{item.area}}平方米</span>
+                    <span style="color: #3498db">&nbsp&nbsp<i class="fa fa-heart"
+                            aria-hidden="true">&nbsp热度{{item.page_views}}</i></span>
+                    <span class="price float-right">￥{{item.price}}</span>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 
     <hr>
 </div>
+
+<script>
+    $(function () {
+        // tab切换逻辑
+        $(".nav-tabs li").click(function () {
+            let status = $(this).hasClass("chanle1")
+            if (status) {
+                $(".chanle1").addClass("active")
+                // 切换到地区搜索，修改placeholder
+                $('#txt').attr('placeholder', '请输入区域、商圈或小区名开始找房');
+                $('#txt').attr('name','addr')
+            }
+            else {
+                // 切换到户型搜索，修改placeholder
+                $('#txt').attr('placeholder', '请输入户型开始找房，例如:1室1厅');
+                $('#txt').attr('name','rooms')
+            }
+            $(this).addClass("active").siblings().removeClass("active")
+        });
+    });
+
+     // 关键字搜索 
+    let oTxt = document.getElementById("txt") // 输入框
+    let oBtn = document.getElementById("oBtn") // 按扭
+    let oList = document.getElementById("list") // 提示列表
+
+    // 设置锁，true表示锁住输入框，false表示解锁输入框
+    let cpLock = false;
+
+    // 监听compositionstart事件，监听输入中文触发事件
+    $("#txt").on('compositionstart', function () {
+        cpLock = true;
+    })
+
+    // 当文本段落的组成完成或取消时，compositionend 事件将被触发
+    $("#txt").on('compositionend', function () {
+        cpLock = false;
+        var resultList = searchByIndexOf($(this).val());
+    })
+
+    // 英文搜索，监听input事件，用于处理字母搜索
+    $("#txt").on('input', function () {
+        if (!cpLock) {
+            var resultList = searchByIndexOf($(this).val());
+        }
+    })
+
+    // 搜索关键字
+    function searchByIndexOf(keyWord) {
+        $(".my-nav-tab li").each(function () {
+            if ($(this).hasClass("active")) {
+                let data = {
+                    "kw": keyWord,
+                    'info': $(this).text()
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url: '/search/keyword/',
+                    data: data,
+                    dataType: 'json',
+                    success: function (res) {
+                        console.log(res)
+                        if (res.code == 0) {
+                            let str = `未找到关于 ${keyWord}的房屋信息！`
+                            alert(str);
+                            return false;
+                        }
+                        else {
+                            list = res.data
+                            console.log(data)
+                            oList.innerHTML = '';
+                            let item = null;
+                            for (let i = 0; i < list.length; i++) {
+                                item = document.createElement('li')
+                                item.className = 'list-group-item li_style'
+                                item.setAttribute('title', list[i].t_name)
+                                li_text = list[i]['t_name'] + '<span class="badge float-right">大约有' + list[i]['num'] + '套房</span>'
+                                item.innerHTML = li_text
+                                oList.appendChild(item)
+                                info_to_txt();
+                            }
+                            return list;
+                        }
+                    }
+                })
+            }
+
+        })
+    }
+
+    function info_to_txt() {
+        $(".li_style").on('click', function () {
+            // 实现了重复点击的初始化
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active')
+            }
+            $(this).addClass('active');
+            t_name = $(this).attr('title');
+            $('#txt').val('');
+            $('#txt').val(t_name);
+            $('#list').empty()
+        })
+    }
+
+
+
+</script>
+
 
 {% endblock %}
