@@ -4,8 +4,7 @@
 <link href="/static/css/zxf_page.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/house/css/list.css">
 <!-- 分页JS -->
-<!-- <script src="/static/js/zxf_page.js"></script> -->
-
+<script src="/static/js/zxf_page.js"></script>
 
 <!-- Page Header -->
 <header class="masthead" style="background-image: url('/static/img/home-bg.jpg')">
@@ -36,82 +35,94 @@
         </div>
         <!-- 模块1信息展示 -->
         <div class="collection col-lg-12 col-md-12">
-            <div id="fill-data" class="">
-
+            <div id="fill-data" class="{{page_num}}">
+                {% for item in house_list %}
                 <div class="row collection-line">
-
                     <div class="col-lg-5 col-md-5 mx-auto">
-                        <div><a href="/house"><img class='img-fluid img-box'
-                                    src="/static/img/house-bg1.jpg" alt=""></a></div>
+                        <div><a href="/house/{{item.id}}"><img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}" alt=""></a></div>
                     </div>
                     <div class="col-lg-5 col-md-5 mx-auto">
                         <div class="collection-line-info">
                             <div class="title">
-                                <span><a href="/house">45544</a></span>
+                                <span><a href="/house/{{item.id}}">{{item.title | dealover}}</a></span>
                             </div>
                             <div>
                                 <span class="attribute-text">房源地址：</span>
                                 &nbsp
-                                <span class="info-text">65666 </span>
+                                <span class="info-text">{{item.address}}</span>
                             </div>
                             <div>
                                 <span class="attribute-text">建筑面积：</span>
                                 &nbsp
-                                <span class="info-text">777平方米</span>
+                                <span class="info-text">{{item.area}}</span>
                             </div>
                             <div>
                                 <span class="attribute-text">房源户型：</span>
                                 &nbsp
-                                <span class="info-text">888</span>
+                                <span class="info-text">{{item.rooms}}</span>
                             </div>
                             <div>
                                 <span class="attribute-text">房源朝向：</span>
                                 &nbsp
-                                <span class="info-text">9999</span>
+                                <span class="info-text">{{item.direction | dealdirection}}</span>
                             </div>
                             <div>
                                 <span class="attribute-text">交通条件：</span>
                                 &nbsp
-                                <span class="info-text">99999</span>
+                                <span class="info-text">{{item.traffic | dealdirection}}</span>
                             </div>
-
                             <div>
-                                <span class="attribute-text"><i class="fa fa-heart" aria-hidden="true"
-                                        style="color: #e74c3c"></i>445455人浏览过</span>
+                                <span class="attribute-text"><i class="fa fa-heart" aria-hidden="true" style="color: #e74c3c"></i>{{item.page_views}}</span>
                                 &nbsp
                                 <span class="info-text"></span>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 mx-auto">
                         <div class="info-more">
-                            <span class="info-text" style="color: #e74c3c">￥&nbsp88888</span>
-                            <span><a href="/house"><i class="fa fa-arrow-right"
-                                        aria-hidden="true"></i></a></span>
+                            <span class="info-text" style="color: #e74c3c">￥&nbsp{{item.price}}</span>
+                            <span><a href="/house/{{item.id}}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></span>
                         </div>
                     </div>
                 </div>
-
+                {% endfor %}
             </div>
-
-
             <div class="row my-page-line">
                 <div class="col-lg-12 col-md-12 mx-auto">
+                    <!-- 分页容器 -->
                     <div class="zxf_pagediv"></div>
                 </div>
             </div>
         </div>
-
         <!-- 右边栏信息展示 -->
         <div class="col-lg-2">
             <div class="row">
             </div>
         </div>
-
     </div>
 </div>
 <hr>
 
+<script>
+    // 获取当前url参数
+    function getQueryParams() {
+        let params = new URLSearchParams(window.location.search);
+        params.delete('page'); // 移除已有的page参数
+        let paramStr = params.toString();
+        return paramStr ? ('?' + paramStr) : '';
+    }
+    $(".zxf_pagediv").createPage({
+        pageNum: {{total_num}},//总页码
+        current: Number($("#fill-data").attr("class")),//当前的页码
+        backfun: function (e) {
+            // 获取当前页
+            let n_current = e.current;
+            // 拼接url，保留原有查询参数
+            let paramStr = getQueryParams();
+            let url = `/query/${n_current}${paramStr}`;
+            location.replace(url);
+        }
+    });
+</script>
 
 {% endblock %}

@@ -1,24 +1,26 @@
-from flask import Flask, Blueprint, render_template,request,jsonify
+from flask import Flask, Blueprint, render_template, request, jsonify
 from models import House
+import math
 
 query_page = Blueprint('query_page', __name__)
 
-@query_page.route('/query')
-def search_txt_info():
-    #获取地区字段的查询
-    if request.args.get('addr'):
-        addr = request.args.get('addr')
-        result = House.query.filter(House.address == addr).order_by(House.publish_time.desc()).all()
-        print(request.args.get('addr'))
-        return render_template('list.html',house_list=result)
-    #获取户型字段的查询
-    if request.args.get('rooms'):
-        rooms = request.args.get('rooms')
-        result = House.query.filter(House.rooms == rooms).order_by(House.publish_time.desc()).all()
-        print(request.args.get('rooms'))
-        return render_template('list.html',house_list=result)
-    #默认渲染首页
-    return render_template('index_page.index')
+@query_page.route('/query', defaults={'page': 1})
+@query_page.route('/query/<int:page>')
+def search_txt_info(page):
+    per_page = 10
+    # 获取查询参数
+    addr = request.args.get('addr')
+    rooms = request.args.get('rooms')
+    query = House.query
+    if addr:
+        query = query.filter(House.address == addr)
+    if rooms:
+        query = query.filter(House.rooms == rooms)
+    # 总数和分页
+    house_num = query.count()
+    total_num = math.ceil(house_num / per_page)
+    result = query.order_by(House.publish_time.desc()).paginate(page=page, per_page=per_page)
+    return render_template('search.html', house_list=result.items, page_num=result.page, total_num=total_num, addr=addr, rooms=rooms)
 
 #当房源标题长度大于15时用省略号
 def deal_title_cover(title):

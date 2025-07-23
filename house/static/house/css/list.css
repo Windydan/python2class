@@ -115,7 +115,7 @@
 .info-more i:hover,
 .info-more i:focus {
     color: #e74c3c;
-    opacity: 0;
+    /* opacity: 0; */
     animation: fadeIn 0.5s infinite linear alternate-reverse;
 }
 

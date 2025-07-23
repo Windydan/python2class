@@ -9,6 +9,7 @@ from page.query import query_page
 
 # 用户API
 from api.user import user_api
+from api.detail import detail_api
 
 # 引入数据库配置
 from config import Config
@@ -34,6 +35,9 @@ app.register_blueprint(query_page, url_prefix='/')
 
 # 注册用户登录与注册接口
 app.register_blueprint(user_api, url_prefix='/')
+
+#注册详情页API
+app.register_blueprint(detail_api,url_prefix='/get/')
 
 # 连接数据库
 app.config.from_object(Config)

@@ -63,7 +63,7 @@
             <h3>为您为家</h3>
             <div class="describe">
                 <span>为您精准定位，当前城市房源信息</span>
-                <span class="float-right"><a href="/list" style="color: #3498db; padding-right: 5px">更多北京房源</a></span>
+                <span class="float-right"><a href="/list/pattern/1" style="color: #3498db; padding-right: 5px">更多北京房源</a></span>
             </div>
         </div>
         <!-- 模块1信息展示 -->
@@ -71,7 +71,7 @@
         <div class="col-lg-4">
             <div class="course">
                 <div>
-                    <a href="/house">
+                    <a href="/house/{{item.id}}">
                         <img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}"
                             alt="">
                     </a>
@@ -99,7 +99,7 @@
             <h3>为您推荐</h3>
             <div class="describe">
                 <span>热点房源，我们为你精选</span>
-                <span class="float-right"><a href="/list" style="color: #3498db; padding-right: 5px">更多热点房源</a></span>
+                <span class="float-right"><a href="/list/hot_house/1" style="color: #3498db; padding-right: 5px">更多热点房源</a></span>
             </div>
         </div>
         <!-- 模块2内容 -->
@@ -107,7 +107,7 @@
         <div class="col-lg-3">
             <div class="course">
                 <div>
-                    <a href="/house">
+                    <a href="/house/{{item.id}}">
                         <img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}"
                             alt="">
                     </a>
@@ -138,45 +138,82 @@
                 $(".chanle1").addClass("active")
                 // 切换到地区搜索，修改placeholder
                 $('#txt').attr('placeholder', '请输入区域、商圈或小区名开始找房');
-                $('#txt').attr('name','addr')
+                $('#txt').attr('name', 'addr')
             }
             else {
                 // 切换到户型搜索，修改placeholder
                 $('#txt').attr('placeholder', '请输入户型开始找房，例如:1室1厅');
-                $('#txt').attr('name','rooms')
+                $('#txt').attr('name', 'rooms')
             }
             $(this).addClass("active").siblings().removeClass("active")
+            $('#txt').val('');      // 清空输入框
+            $('#list').empty();     // 清空下拉列表
         });
     });
 
-     // 关键字搜索 
-    let oTxt = document.getElementById("txt") // 输入框
-    let oBtn = document.getElementById("oBtn") // 按扭
-    let oList = document.getElementById("list") // 提示列表
+    // 延迟搜索，避免频繁请求
+    let searchTimeout;
+    let isChinese = false; // 标记是否正在输入中文
+    let isRequestInProgress = false; // 标记请求是否正在进行中
+    let isAlertShown = false; // 控制弹窗只显示一次
+    let lastSearchedKeyword = ''; // 存储上一次的搜索关键字
 
-    // 设置锁，true表示锁住输入框，false表示解锁输入框
-    let cpLock = false;
-
-    // 监听compositionstart事件，监听输入中文触发事件
-    $("#txt").on('compositionstart', function () {
-        cpLock = true;
-    })
-
-    // 当文本段落的组成完成或取消时，compositionend 事件将被触发
-    $("#txt").on('compositionend', function () {
-        cpLock = false;
-        var resultList = searchByIndexOf($(this).val());
-    })
-
-    // 英文搜索，监听input事件，用于处理字母搜索
+    // 输入框监控
     $("#txt").on('input', function () {
-        if (!cpLock) {
-            var resultList = searchByIndexOf($(this).val());
+        let keyword = $(this).val();
+
+        // 如果输入框为空，清空下拉列表
+        if (keyword.trim() === "") {
+            $('#list').empty(); // 清空下拉列表
+            lastSearchedKeyword = ''; // 清空上次搜索的关键字
+            return; // 不触发搜索
         }
-    })
+
+        // 如果是英文输入，忽略不触发请求
+        if (isEnglish(keyword)) {
+            return;
+        }
+
+        // 防止重复触发请求
+        clearTimeout(searchTimeout);
+
+        // 延迟300ms后触发搜索
+        searchTimeout = setTimeout(function () {
+            // 防止请求正在进行时再次触发
+            if (isRequestInProgress) return;
+
+            // 设置请求中标志
+            isRequestInProgress = true;
+            searchByIndexOf(keyword);
+        }, 300); // 设置延迟300ms
+    });
+
+    // 判断输入是否为英文
+    function isEnglish(text) {
+        const englishRegex = /^[A-Za-z0-9\s]*$/; // 只匹配英文、数字和空格
+        return englishRegex.test(text);
+    }
+
+    // 中文输入时设置标记
+    $("#txt").on('compositionstart', function () {
+        isChinese = true; // 设置正在输入中文
+    });
+
+    // 中文输入结束时触发
+    $("#txt").on('compositionend', function () {
+        isChinese = false; // 设置输入结束
+        let keyword = $(this).val();
+        searchByIndexOf(keyword);
+    });
 
     // 搜索关键字
     function searchByIndexOf(keyWord) {
+        // 如果关键字与上一次相同，不执行请求
+        if (keyWord === lastSearchedKeyword) {
+            isRequestInProgress = false;
+            return;
+        }
+
         $(".my-nav-tab li").each(function () {
             if ($(this).hasClass("active")) {
                 let data = {
@@ -190,50 +227,61 @@
                     data: data,
                     dataType: 'json',
                     success: function (res) {
-                        console.log(res)
-                        if (res.code == 0) {
-                            let str = `未找到关于 ${keyWord}的房屋信息！`
-                            alert(str);
-                            return false;
+                        // 请求完成后重置请求中标志
+                        isRequestInProgress = false;
+
+                        // 防止重复弹窗
+                        if (res.code == 0 && !isAlertShown) {
+                            alert(`未找到关于 ${keyWord}的房屋信息！`);
+                            isAlertShown = true; // 弹窗显示过后设置标记
+                        } else if (res.code == 1) {
+                            renderSearchResults(res.data);
+                            isAlertShown = false; // 有数据时重置弹窗标记
                         }
-                        else {
-                            list = res.data
-                            console.log(data)
-                            oList.innerHTML = '';
-                            let item = null;
-                            for (let i = 0; i < list.length; i++) {
-                                item = document.createElement('li')
-                                item.className = 'list-group-item li_style'
-                                item.setAttribute('title', list[i].t_name)
-                                li_text = list[i]['t_name'] + '<span class="badge float-right">大约有' + list[i]['num'] + '套房</span>'
-                                item.innerHTML = li_text
-                                oList.appendChild(item)
-                                info_to_txt();
-                            }
-                            return list;
-                        }
+                    },
+                    error: function () {
+                        // 请求出错时也重置请求中标志
+                        isRequestInProgress = false;
                     }
                 })
             }
-
         })
+        // 保存当前搜索的关键字
+        lastSearchedKeyword = keyWord;
     }
 
-    function info_to_txt() {
-        $(".li_style").on('click', function () {
-            // 实现了重复点击的初始化
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active')
-            }
-            $(this).addClass('active');
-            t_name = $(this).attr('title');
-            $('#txt').val('');
-            $('#txt').val(t_name);
-            $('#list').empty()
-        })
+    // 渲染搜索结果
+    function renderSearchResults(list) {
+        let oList = document.getElementById("list");
+        oList.innerHTML = '';  // 清空下拉列表
+        list.forEach(function (item) {
+            let listItem = document.createElement('li');
+            listItem.className = 'list-group-item li_style';
+            listItem.setAttribute('title', item.t_name);
+            listItem.innerHTML = `${highlightKeyword(item.t_name)} <span class="badge float-right">大约有${item.num}套房</span>`;
+            oList.appendChild(listItem);
+            bindClickEvent(listItem);
+        });
     }
 
+    // 点击搜索结果
+    function bindClickEvent(listItem) {
+        listItem.addEventListener('click', function () {
+            $('#txt').val($(this).attr('title'));
+            $('#list').empty();
+        });
+    }
 
+    // 高亮关键词
+    function highlightKeyword(text) {
+        let keyword = $("#txt").val();
+        if (keyword) {
+            return text.replace(new RegExp(`(${keyword})`, 'gi'), '<span class="highlighted">$1</span>');
+        }
+        else {
+            return `<span>${text}</span>`;
+        }
+    }
 
 </script>
 

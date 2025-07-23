@@ -1,15 +1,15 @@
 function column_chart(data) {
 
-    let salaru_line = echarts.init(document.getElementById('scolumn_line'));
+    var salaru_line = echarts.init(document.getElementById('scolumn_line'));
     window.addEventListener('resize', function () {
         salaru_line.resize();
     });
     let XData = data.name; // X轴的数据
     let YData = data.list;  // Y轴的数据
 
-    let  dataMin = parseInt(Math.min.apply(null, YData) / 2);
+    let dataMin = parseInt(Math.min.apply(null, YData) / 2);
 
-    let  option = {
+    let option = {
         backgroundColor: "#fff",
         grid: {
             height: '200px',
@@ -47,9 +47,10 @@ function column_chart(data) {
                         return value;
                     }
                 },
-                interval: 0,
-                fontSize: 11,
+                interval: 0, // 显示所有标签
+                fontSize: 10, // 减小字体
                 fontWeight: 100,
+                //rotate: 45, // 旋转标签避免重叠
                 textStyle: {
                     color: '#555',
 
@@ -63,9 +64,11 @@ function column_chart(data) {
         },
         yAxis: {
             name: '房源数量/套',
-            nameLocation: 'center',
-            nameGap: 35,
-
+            nameLocation: 'end', // 改为顶部显示
+            nameGap: 20, // 减小间距
+            nameTextStyle: {
+                fontSize: 12
+            },
             axisTick: {
                 show: false
             },
@@ -88,15 +91,17 @@ function column_chart(data) {
                 }
             }
         },
-        "tooltip": {
-            "trigger": "item",
-            "textStyle": {
-                "fontSize": 12
+        tooltip: {
+            trigger: "item",
+            textStyle: {
+                fontSize: 12
             },
-            "formatter": "{b0}: {c0}套"
+            formatter: "{b0}: {c0}套"
         },
+      
         series: [{
             type: "bar",
+            barWidth: 10, // 设置柱子宽度
             itemStyle: {
                 normal: {
                     color: {
@@ -114,14 +119,14 @@ function column_chart(data) {
                         }],
                         globalCoord: false // 缺省为 false
                     },
-                    barBorderRadius: 15,
+                    barBorderRadius: [15,15,15,15]
                 }
             },
             data: YData,
             label: {
                 show: true,
                 position: 'top',
-                "fontSize": 10
+                fontSize: 10
             }
         }]
     };

@@ -10,7 +10,7 @@ def index():
      # 获取房源总量
     house_total_num = House.query.count()
     # 获取最新房源6条
-    house_new_list = House.query.order_by(House.publish_time.desc()).limit(8).all()
+    house_new_list = House.query.order_by(House.publish_time.desc()).limit(6).all()
     for house in house_new_list:
      print(house.id, house.img, house.publish_time)
     # 获取热门房源4条
@@ -38,7 +38,7 @@ def search_kw():
             for i in result:
                 # 将查询的数据添加到data中
                 data.append({'t_name': i[0], 'num': i[1]})
-                return jsonify({'code': 1, 'msg': '查询成功', 'data': data})
+            return jsonify({'code': 1, 'msg': '查询成功', 'data': data})
         else:
             return jsonify({'code': 0, 'msg': '暂无数据', 'data': []})
         
@@ -53,7 +53,7 @@ def search_kw():
             for i in result:
                 # 将查询的数据添加到data中
                 data.append({'t_name': i[0], 'num': i[1]})
-                return jsonify({'code': 1, 'msg': '查询成功', 'data': data})
+            return jsonify({'code': 1, 'msg': '查询成功', 'data': data})
         else:
             return jsonify({'code': 0, 'msg': '暂无数据', 'data': []})
 
