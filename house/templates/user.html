@@ -48,13 +48,14 @@
                     </div>
                 </form>
                 <!--收藏列表-->
-                <div class="collection" style="display:none;">
+                <div class="collection" >
+                    {% for item in collect_houses %}
                     <div class="row collection-line" id="collect">
                         <span class="collect_off" id="">取消收藏</span>
                         <div class="col-lg-4 col-md-4 mx-auto">
                             <div>
-                                <a href="/house">
-                                    <img class='img-fluid img-box' src="/static/img/house-bg1.jpg" alt="">
+                                <a href="/house/{{item.id}}">
+                                    <img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}" alt="">
                                 </a>
                             </div>
                         </div>
@@ -63,27 +64,27 @@
                                 <div>
                                     <span class="attribute-text">房源地址：</span>
                                     &nbsp
-                                    <span class="info-text">5555</span>
+                                    <span class="info-text">{{item.address}}</span>
                                 </div>
                                 <div>
                                     <span class="attribute-text">建筑面积：</span>
                                     &nbsp
-                                    <span class="info-text">6666平方米</span>
+                                    <span class="info-text">{{item.area}}平方米</span>
                                 </div>
                                 <div>
                                     <span class="attribute-text">房源户型：</span>
                                     &nbsp
-                                    <span class="info-text">7777</span>
+                                    <span class="info-text">{{item.rooms}}</span>
                                 </div>
                                 <div>
                                     <span class="attribute-text">房源朝向：</span>
                                     &nbsp
-                                    <span class="info-text">8888</span>
+                                    <span class="info-text">{{item.direction | dealdirection}}</span>
                                 </div>
                                 <div>
                                     <span class="attribute-text">房源价格：</span>
                                     &nbsp
-                                    <span class="info-text" style="color: #e74c3c">￥&nbsp7777</span>
+                                    <span class="info-text" style="color: #e74c3c">￥&nbsp{{item.price}}</span>
                                 </div>
 
                             </div>
@@ -91,12 +92,13 @@
                         <div class="col-lg-2 col-md-2 mx-auto" style="height: 100px; margin-top: 40px;">
                             <div class="info-more"
                                 style="width: 100%; height: 100%; position: relative; overflow: hidden;">
-                                <span><a href="/house"
+                                <span><a href="/house/{{item.id}}"
                                         style="position: absolute; top:-30px; left: -1px; height: 20px;"><i
                                             class="fa fa-arrow-right" aria-hidden="true"></i></a></span>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
 
                 </div>
             </div>
@@ -116,19 +118,21 @@
 
 
                         <div class="col-lg-10 col-md-10 mx-auto browse-record-first-div">
+                            {% for item in seen_houses %}
                             <div class="course">
-                                <div><a href="/house"><img class='img-fluid img-box' src="/static/img/house-bg1.jpg"
+                                <div><a href="/house/{{item.id}}"><img class='img-fluid img-box' src="{{ item.img if item.img else '/static/img/house-bg1.jpg' }}"
                                             alt=""></a>
                                 </div>
                                 <div class="course-info">
                                     <span class="glyphicon glyphicon-map-marker"></span>
-                                    <span>55555</span>
+                                    <span>{{item.title}}</span>
                                 </div>
                                 <div class="course-info1">
-                                    <span>6666-200平方米</span>
-                                    <span class="price">￥&nbsp8888</span>
+                                    <span>{{title.area}}平方米</span>
+                                    <span class="price">￥&nbsp{{item.price}}</span>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
 
                     </div>
@@ -270,6 +274,26 @@ $(function(){
         }
         $(this).addClass("active").siblings().removeClass("active")
     });
+
+    //
+
+    // 取消收藏按钮事件
+    $('.collection').on('click', '.collect_off', function(){
+            var $row = $(this).closest('.collection-line');
+            var houseId = $row.find('a').attr('href').split('/').pop();
+            // 弹窗确认
+            if(confirm('确认取消收藏？')){
+                $.post('/user/uncollect', {house_id: houseId}, function(res){
+                    if(res.valid == 1){
+                        $row.remove(); // 前端移除该房源
+                    }else{
+                        alert(res.msg || '操作失败');
+                    }
+                });
+            }
+        });
+    
 });
+
 </script>
 {% endblock %}

@@ -28,8 +28,10 @@
                             <div class="house-info">
                                 <span class="price">￥&nbsp{{house.price}}/月</span>
                                 <span class="collection" id="btn-collection">
-                                    <a>
-                                        <i class="fa fa-heart" aria-hidden="true"> 收藏</i>
+                                    <a href="javascript:void(0);">
+                                        <i class="fa fa-heart{% if is_collected %} collected{% endif %}" aria-hidden="true" id="collect-icon">
+                                            {{ ' 已收藏' if is_collected else ' 收藏' }}
+                                        </i>
                                     </a>
                                 </span>
                             </div>
@@ -289,6 +291,24 @@
     </div>
 </header>
 
+<!-- 弹窗提示 -->
+<div id="collect-modal" class="modal" tabindex="-1" role="dialog" style="display:none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">提示</h5>
+      </div>
+      <div class="modal-body">
+        <p id="modal-msg"></p>
+      </div>
+      <div class="modal-footer" id="modal-footer">
+        <button type="button" class="btn btn-primary" id="modal-confirm">确定</button>
+        <button type="button" class="btn btn-secondary" id="modal-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/static/js/echarts.min.js"></script>
 <script src="/static/vendor/echarts-stat/ecStat.min.js"></script>
 
@@ -349,5 +369,60 @@
       
 
     })
+</script>
+<script>
+$(function(){
+    var isLogin = {{ 'true' if user else 'false' }};
+    var isCollected = {{ 'true' if is_collected else 'false' }};
+    var houseId = {{ house.id }};
+    // 弹窗函数
+    function showModal(msg, showCancel, confirmCb, cancelCb) {
+        $('#modal-msg').text(msg);
+        $('#collect-modal').show();
+        if(showCancel){
+            $('#modal-cancel').show();
+        }else{
+            $('#modal-cancel').hide();
+        }
+        $('#modal-confirm').off('click').on('click', function(){
+            $('#collect-modal').hide();
+            if(confirmCb) confirmCb();
+        });
+        $('#modal-cancel').off('click').on('click', function(){
+            $('#collect-modal').hide();
+            if(cancelCb) cancelCb();
+        });
+    }
+    // 收藏按钮点击事件
+    $('#btn-collection').on('click', function(){
+        if(!isLogin){
+            showModal('请先登录', false);
+            return;
+        }
+        if(!isCollected){
+            // 未收藏，点击收藏
+            $.post('/house/collect', {house_id: houseId}, function(res){
+                if(res.valid==1){
+                    $('#collect-icon').addClass('collected').text(' 已收藏');
+                    isCollected = true;
+                }else if(res.msg){
+                    showModal(res.msg, false);
+                }
+            });
+        }else{
+            // 已收藏，弹窗确认取消
+            showModal('确认取消收藏？', true, function(){
+                $.post('/house/uncollect', {house_id: houseId}, function(res){
+                    if(res.valid==1){
+                        $('#collect-icon').removeClass('collected').text(' 收藏');
+                        isCollected = false;
+                    }else if(res.msg){
+                        showModal(res.msg, false);
+                    }
+                });
+            });
+        }
+    });
+});
 </script>
 {% endblock %}

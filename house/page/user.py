@@ -14,4 +14,3 @@ def user_profile(username=None):
         username = session.get('name')
     
     return render_template('user.html', username=username)
-
