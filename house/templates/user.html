@@ -293,6 +293,19 @@ $(function(){
             }
         });
     
+    // 清空浏览记录按钮事件
+    $('#del').on('click', function(){
+        if(confirm('确认清空所有浏览记录？')){
+            $.post('/api/user/clear_seen', function(res){
+                if(res.valid == 1){
+                    // 清空页面上的浏览记录
+                    $('.browse-record-first-div').empty();
+                }else{
+                    alert(res.msg || '操作失败');
+                }
+            });
+        }
+    });
 });
 
 </script>

@@ -18,15 +18,24 @@ def user_profile(username=None):
     collect_houses = []
     if user and user.collect_id:
         id_list = [int(i) for i in user.collect_id.split('、') if i]
+        # 反转顺序，让最后收藏的在最前面
+        id_list = id_list[::-1]
         if id_list:
-            collect_houses = House.query.filter(House.id.in_(id_list)).all()
-            print(collect_houses)
+            houses = House.query.filter(House.id.in_(id_list)).all()
+            # 保证顺序与id_list一致
+            id_to_house = {h.id: h for h in houses}
+            collect_houses = [id_to_house[i] for i in id_list if i in id_to_house]
     #浏览记录
     seen_houses = []
     if user and user.seen_id:
         seen_id_list = [int(i) for i in user.seen_id.split('、') if i]
+        # 反转顺序，让最后浏览的在最前面
+        seen_id_list = seen_id_list[::-1]
         if seen_id_list:
-            seen_houses = House.query.filter(House.id.in_(seen_id_list)).all()
+            houses = House.query.filter(House.id.in_(seen_id_list)).all()
+            # 保证顺序与seen_id_list一致
+            id_to_house = {h.id: h for h in houses}
+            seen_houses = [id_to_house[i] for i in seen_id_list if i in id_to_house]
     return render_template('user.html', username=username,collect_houses=collect_houses, seen_houses=seen_houses)
 
 # #取消收藏

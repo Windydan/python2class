@@ -21,10 +21,14 @@ def house_detail(house_id):
         #获取浏览记录id
         if user:
             seen_list = user.seen_id.split('、') if user.seen_id else []
-            if str(house_id) not in seen_list:
-                seen_list.append(str(house_id))
-                user.seen_id = '、'.join(seen_list)
-                db.session.commit()
+            house_id_str = str(house_id)
+            # 如果已存在，先移除
+            if house_id_str in seen_list:
+                seen_list.remove(house_id_str)
+            # 再追加到末尾
+            seen_list.append(house_id_str)
+            user.seen_id = '、'.join(seen_list)
+            db.session.commit()
 
     if house:
         #增加房源浏览量

@@ -180,3 +180,15 @@ def user_uncollect():
         db.session.commit()
     return jsonify({'valid': 1, 'msg': '已取消收藏'})
 
+# 清空浏览记录
+@user_api.route('/user/clear_seen', methods=['POST'])
+def clear_seen():
+    if 'name' not in session:
+        return jsonify({'valid': 0, 'msg': '未登录'})
+    user = User.query.filter_by(name=session['name']).first()
+    if not user:
+        return jsonify({'valid': 0, 'msg': '用户不存在'})
+    user.seen_id = ''
+    db.session.commit()
+    return jsonify({'valid': 1, 'msg': '浏览记录已清空'})
+
