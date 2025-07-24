@@ -83,4 +83,4 @@ def deal_none(word):
 
 detail_page.add_app_template_filter(deal_none, 'dealNone')
    
-#记录浏览记录
+

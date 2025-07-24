@@ -125,10 +125,10 @@
                                 </div>
                                 <div class="course-info">
                                     <span class="glyphicon glyphicon-map-marker"></span>
-                                    <span>{{item.title}}</span>
+                                    <span>{{item.address}}</span>
                                 </div>
                                 <div class="course-info1">
-                                    <span>{{title.area}}平方米</span>
+                                    <span>{{item.area}}平方米</span>
                                     <span class="price">￥&nbsp{{item.price}}</span>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@ $(function(){
       // 1. 页面加载时获取用户信息并填充表单
       function loadUserInfo() {
         $.ajax({
-            url: '/user/info', // 假设后端有这个接口，返回JSON
+            url: '/api/user/info', // 假设后端有这个接口，返回JSON
             type: 'GET',
             dataType: 'json',
             success: function(res){
@@ -214,7 +214,7 @@ $(function(){
         };
         $.ajax({
             type: 'POST',
-            url: '/user/update',
+            url: '/api/user/update',
             data: data,
             dataType: 'json',
             success: function(res){
@@ -240,10 +240,10 @@ $(function(){
     function updateUserDisplay(newName) {
         // 更新导航栏中的用户名显示
         $('#u_name').text(newName);
-        $('#u_name').attr('href', '/user/' + newName);
+        $('#u_name').attr('href', '/center/user/' + newName);
         // 更新当前页面的URL（不刷新页面）
         if (window.history && window.history.pushState) {
-            window.history.pushState({}, '', '/user/' + newName);
+            window.history.pushState({}, '', '/center/user/' + newName);
         }
     }
 
@@ -283,7 +283,7 @@ $(function(){
             var houseId = $row.find('a').attr('href').split('/').pop();
             // 弹窗确认
             if(confirm('确认取消收藏？')){
-                $.post('/user/uncollect', {house_id: houseId}, function(res){
+                $.post('/api/user/uncollect', {house_id: houseId}, function(res){
                     if(res.valid == 1){
                         $row.remove(); // 前端移除该房源
                     }else{

@@ -65,7 +65,7 @@ $(document).ready(function () {
         if (validator.isValid()) {
             $.ajax({
                 type: 'post',
-                url: '/register',
+                url: '/api/register',
                 data: $('#registeform').serialize(),
                 dataType: 'json',
                 success: function (result) {
@@ -77,7 +77,7 @@ $(document).ready(function () {
                             $('#registeform').data('bootstrapValidator', null);
                         }
                     } else {
-                        window.location.href = "/user/" + result['msg'];
+                        window.location.href = "/center/user/" + result['msg'];
                     }
                 }
             });
@@ -122,7 +122,7 @@ $(document).ready(function () {
         if (validator.isValid()) {
             $.ajax({
                 type: 'post',
-                url: '/login',
+                url: '/api/login',
                 data: $('#loginform').serialize(),
                 dataType: 'json',
                 success: function (result) {
@@ -134,7 +134,7 @@ $(document).ready(function () {
                             $('#loginform').data('bootstrapValidator', null);
                         }
                     } else {
-                        window.location.href = "/user/" + result['msg'];
+                        window.location.href = "/center/user/" + result['msg'];
                     }
                 }
             });
@@ -143,7 +143,7 @@ $(document).ready(function () {
 // 退出
 $("#logout").on('click', function () {
     $.ajax({
-        url: '/logout',
+        url: '/api/logout',
         type: 'get',
         dataType: 'json',
         success: function (res) {

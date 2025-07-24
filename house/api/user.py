@@ -141,26 +141,27 @@ def user_info():
         }
     })
 
-#收藏房源、浏览记录回显
-@user_api.route('/user')
-def user_center():
-    if 'name' not in session:
-        # 未登录可重定向或返回空
-        return redirect('/')
-    user = User.query.get(session["user_id"])
-    #收藏房源
-    collect_houses = []
-    if user and user.collect_id:
-        id_list = [int(i) for i in user.collect_id.split('、') if i]
-        if id_list:
-            collect_houses = House.query.filter(House.id.in_(id_list)).all()
-    #浏览记录
-    seen_houses = []
-    if user and user.seen_id:
-        seen_id_list = [int(i) for i in user.seen_id.split('、') if i]
-        if seen_id_list:
-            seen_houses = House.query.filter(House.id.in_(seen_id_list)).all()
-    return render_template('user.html', collect_houses=collect_houses, seen_houses=seen_houses)
+# #收藏房源、浏览记录回显
+# @user_api.route('/user/collect')
+# def user_center():
+#     if 'name' not in session:
+#         # 未登录可重定向或返回空
+#         return redirect('/')
+#     user = User.query.get(session["user_id"])
+#     #收藏房源
+#     collect_houses = []
+#     if user and user.collect_id:
+#         id_list = [int(i) for i in user.collect_id.split('、') if i]
+#         if id_list:
+#             collect_houses = House.query.filter(House.id.in_(id_list)).all()
+#             print(collect_houses)
+#     #浏览记录
+#     seen_houses = []
+#     if user and user.seen_id:
+#         seen_id_list = [int(i) for i in user.seen_id.split('、') if i]
+#         if seen_id_list:
+#             seen_houses = House.query.filter(House.id.in_(seen_id_list)).all()
+#     return render_template('user.html', collect_houses=collect_houses, seen_houses=seen_houses)
 
 
 #取消收藏

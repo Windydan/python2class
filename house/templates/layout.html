@@ -59,7 +59,7 @@
                         {% if session.get('name') %} 
                         <!--处于登录状态-->
                         <!--用户名、退出登录-->
-                        <a id='u_name' class="nav-link" href="/user/{{ session.get('name') }}">{{ 
+                        <a id='u_name' class="nav-link" href="/center/user/{{ session.get('name') }}">{{ 
                         session.get('name') }}</a>
                         <!-- <a id='u_name' class="nav-link" href="/user">个人中心</a> -->
                         {% else %} 

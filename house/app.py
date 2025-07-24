@@ -24,7 +24,7 @@ app.register_blueprint(index_page, url_prefix='/')
 app.register_blueprint(detail_page, url_prefix='/')
 
 # 个人中心
-app.register_blueprint(user_page, url_prefix='/')
+app.register_blueprint(user_page, url_prefix='/center')
 
 # 列表
 app.register_blueprint(list_page, url_prefix='/')
@@ -34,7 +34,7 @@ app.register_blueprint(query_page, url_prefix='/')
 
 
 # 注册用户登录与注册接口
-app.register_blueprint(user_api, url_prefix='/')
+app.register_blueprint(user_api, url_prefix='/api')
 
 #注册详情页API
 app.register_blueprint(detail_api,url_prefix='/get/')
